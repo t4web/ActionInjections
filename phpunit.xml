@@ -1,0 +1,7 @@
+<phpunit bootstrap="tests/Bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Base Module Tests">
+            <directory>tests/T4webActionInjectionsTest</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
