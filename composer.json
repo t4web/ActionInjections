@@ -1,0 +1,34 @@
+{
+    "name": "t4web/actioninjections",
+    "description": "ZF2 Module wich allows to inject dependencies in controller action ",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "zf2",
+        "action injections",
+        "injections"
+    ],
+    "homepage": "https://github.com/robaks/ActionInjections",
+    "authors": [
+        {
+            "name": "Ross"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "zendframework/zendframework": "2.4.*"
+    },
+    "require-dev" : {
+        "phpunit/phpunit": "4.5.*"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "T4webActionInjections": "src/",
+            "T4webActionInjectionsTest": "tests/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
