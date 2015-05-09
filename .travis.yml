@@ -10,9 +10,13 @@ install:
 
 before_script:
   # - mkdir -p build/coverage
+  - sudo pip install codecov
 
 script:
-  - php vendor/bin/phpunit
+  - php vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+  - codecov
 
 notifications:
   email:
