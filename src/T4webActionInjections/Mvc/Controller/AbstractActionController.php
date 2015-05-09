@@ -59,7 +59,7 @@ class AbstractActionController extends ZendAbstractActionController
             } catch (ServiceNotFoundException $e) {
                 throw new DependencyNotResolvedException('Controller action dependency not resolved: ' . $e->getMessage());
             }
-         }
+            }
 
         return $dependencies;
     }
