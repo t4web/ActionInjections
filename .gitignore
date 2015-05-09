@@ -4,3 +4,4 @@ vendor/
 build/
 
 tests/_output/*
+tests/coverage.xml
