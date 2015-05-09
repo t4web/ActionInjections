@@ -9,10 +9,10 @@ install:
   - composer install --no-interaction
 
 before_script:
-  - mkdir -p build/coverage
+  # - mkdir -p build/coverage
 
 script:
-  - php ./vendor/bin/phpunit -c phpunit.xml --coverage-php build/coverage/coverage-{/.}.cov
+  - php vendor/bin/phpunit
 
 notifications:
   email:
