@@ -12,7 +12,7 @@ before_script:
   - mkdir -p build/coverage
 
 script:
-  - php ./vendor/bin/phpunit -c phpunit.xml --colors=always --coverage-php build/coverage/coverage-{/.}.cov
+  - php ./vendor/bin/phpunit -c phpunit.xml --coverage-php build/coverage/coverage-{/.}.cov
 
 notifications:
   email:
