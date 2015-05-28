@@ -51,6 +51,11 @@ class AbstractActionController extends ZendAbstractActionController
 
         foreach ($actionDependencies as $dependency) {
             try {
+                if (is_callable($dependency)) {
+                    $dependencies[] = $dependency($serviceLocator, $this);
+                    continue;
+                }
+
                 $dependencies[] = $serviceLocator->get($dependency);
             } catch (ServiceNotFoundException $e) {
                 throw new DependencyNotResolvedException('Controller action dependency not resolved: ' . $e->getMessage());

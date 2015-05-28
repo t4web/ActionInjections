@@ -57,6 +57,55 @@ class AbstractActionControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($actionResponse, $result);
     }
 
+    public function testOnDispatch_ModuleConfigContainСallableControllerActionInjections_ExecuteMethodWithParams() {
+        $config = array(
+            'controller_action_injections' => array(
+                get_class($this->controller) => array(
+                    'listAction' => array(
+                        function($serviceLocator, $targetController) {
+                            return $serviceLocator->get('ControllerPluginManager')->get('params');
+                        }
+                    ),
+                ),
+            ),
+        );
+        $someDependency = 'someDependency';
+        $actionResponse = 'someResponse';
+        $controllerPluginManagerMock = $this->getMock('Zend\Mvc\Controller\ControllerManager');
+
+        $this->routeMatchMock->expects($this->once())
+            ->method('getParam')
+            ->will($this->returnValue('list'));
+
+        $this->serviceLocatorMock->expects($this->at(0))
+            ->method('get')
+            ->with($this->equalTo('config'))
+            ->will($this->returnValue($config));
+
+        $this->serviceLocatorMock->expects($this->at(1))
+            ->method('get')
+            ->with($this->equalTo('ControllerPluginManager'))
+            ->will($this->returnValue($controllerPluginManagerMock));
+
+        $controllerPluginManagerMock->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('params'))
+            ->willReturn($someDependency);
+
+        $this->controller->expects($this->once())
+            ->method('listAction')
+            ->with($this->equalTo($someDependency))
+            ->will($this->returnValue($actionResponse));
+
+        $this->mvcEventMock->expects($this->once())
+            ->method('setResult')
+            ->with($this->equalTo($actionResponse));
+
+        $result = $this->controller->onDispatch($this->mvcEventMock);
+
+        $this->assertEquals($actionResponse, $result);
+    }
+
     public function testOnDispatch_ModuleConfigContainControllerActionInjections_ExecuteMethodWithParams() {
         $config = array(
             'controller_action_injections' => array(
