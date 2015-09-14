@@ -10,6 +10,28 @@ use T4webActionInjections\Mvc\Controller\Exception\DependencyNotResolvedExceptio
 
 class AbstractActionController extends ZendAbstractActionController
 {
+    /**
+     * Controller class name
+     *
+     * @var string
+     */
+    private $requestedName;
+
+    /**
+     * @return string
+     */
+    public function getRequestedName()
+    {
+        return $this->requestedName;
+    }
+
+    /**
+     * @param string $requestedName
+     */
+    public function setRequestedName($requestedName)
+    {
+        $this->requestedName = $requestedName;
+    }
 
     /**
      * Execute the request
@@ -32,7 +54,12 @@ class AbstractActionController extends ZendAbstractActionController
             $method = 'notFoundAction';
         }
 
-        $actionResponse = call_user_func_array(array($this, $method), $this->getActionDependencies(get_class($this), $method));
+        $className = get_class($this);
+        if (!empty($this->requestedName)) {
+            $className = $this->requestedName;
+        }
+
+        $actionResponse = call_user_func_array(array($this, $method), $this->getActionDependencies($className, $method));
 
         $e->setResult($actionResponse);
 
